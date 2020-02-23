@@ -70,13 +70,9 @@ public class MainUI extends BorderPane{
     private Map<String, String> positions;
     private DatabaseHelper dbData;
     
-    public MainUI(){
+    public MainUI(DatabaseHelper db){
         
-        try {
-            dbData = new DatabaseHelper();
-        } catch (SQLException ex) {
-            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.dbData = db;
         
         imgTip = new ImageView(new Image(this.getClass().getResource("/Picture1.png").toString()));
         imgTip.setFitHeight(129);
@@ -133,12 +129,11 @@ public class MainUI extends BorderPane{
         txtSearch.getStyleClass().add("searchBox");
         txtSearch.setOnKeyPressed((KeyEvent keyEvent) -> {
             if(keyEvent.getCode() == KeyCode.ENTER){
-                InPosition subUI = new InPosition(txtSearch.getText());
+                InPosition subUI = new InPosition(txtSearch.getText(), dbData);
 //                    Scene scene = new Scene(subUI);
 //                    Stage stage = new Stage();
                 subUI.getBtnBack().setOnAction(e -> {
                     MainUI.this.setCenter(optionTiles);
-                    subUI.dbData.closeDbConn();
                 });
 //                    stage.setScene(scene);
 //                    stage.initStyle(StageStyle.UNDECORATED);
@@ -201,12 +196,12 @@ public class MainUI extends BorderPane{
             {
                 @Override
                 public void handle(MouseEvent t) {
-                    InPosition subUI = new InPosition(Integer.parseInt(position.getKey()));
+                    InPosition subUI = new InPosition(Integer.parseInt(position.getKey()), dbData);
 //                    Scene scene = new Scene(subUI);
 //                    Stage stage = new Stage();
                     subUI.getBtnBack().setOnAction(e -> {
                         MainUI.this.setCenter(optionTiles);
-                        subUI.dbData.closeDbConn();
+                        
                     });
 //                    stage.setScene(scene);
 //                    stage.initStyle(StageStyle.UNDECORATED);
@@ -232,7 +227,7 @@ public class MainUI extends BorderPane{
         MainUI.this.setLeft(vboxSideMenu);
         BorderPane.setMargin(vboxSideMenu, new Insets(10));
         MainUI.this.setCenter(optionTiles);
-        dbData.closeDbConn();
+        
     }
     
     public Button getBtnLogout(){

@@ -200,7 +200,7 @@ public class Politica extends Application {
         pb.progressProperty().bind(task.progressProperty());
         task.setOnSucceeded(h -> {
             if(user.isLoggedIn()){
-                mainUIPane = new MainUI();
+                mainUIPane = new MainUI(dbData);
                 mainUIPane.getBtnLogout().setOnAction(e -> logout());
                 //mainUIPane.getBtnAdd().setOnAction(e -> openAddDialog());
                 mainUIScene = new Scene(mainUIPane);

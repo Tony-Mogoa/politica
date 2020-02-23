@@ -44,19 +44,15 @@ public class InPosition extends BorderPane{
     private Button btnBack;
     private ImageView imgBack;
     private TilePane politicians;
-    public DatabaseHelper dbData;
+    private DatabaseHelper dbData;
     private ScrollPane sp;
     private ProgressBar pb;
     private HBox header;
     private VBox vbCard;
     private Region region;
     
-    public InPosition(int role_id){
-        try {
-            dbData = new DatabaseHelper();
-        } catch (SQLException ex) {
-            Logger.getLogger(InPosition.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public InPosition(int role_id, DatabaseHelper db){
+        this.dbData = db;
         
         politicians = new TilePane();
         politicians.setPadding(new Insets(10));
@@ -86,12 +82,8 @@ public class InPosition extends BorderPane{
         InPosition.this.setPadding(new Insets(10));
     }
     
-    public InPosition(String leaderName){
-        try {
-            dbData = new DatabaseHelper();
-        } catch (SQLException ex) {
-            Logger.getLogger(InPosition.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public InPosition(String leaderName, DatabaseHelper db){
+        this.dbData = db;
         
         politicians = new TilePane();
         politicians.setPadding(new Insets(10));
