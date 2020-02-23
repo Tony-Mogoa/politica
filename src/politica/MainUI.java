@@ -240,10 +240,9 @@ public class MainUI extends BorderPane{
     
     public void openAddDialog(){
         stageUI = new Stage();
-        addUI = new AddPolitician(stageUI);
+        addUI = new AddPolitician(stageUI, dbData);
         addUI.getBtnExit().setOnAction(e -> {
             stageUI.close();
-            addUI.dbData.closeDbConn();
         });
         StackPane spUI = new StackPane(addUI);
         spUI.setPrefWidth(400);
@@ -261,10 +260,9 @@ public class MainUI extends BorderPane{
     
     public void openEditDialog(){
         stageUI = new Stage();
-        editUI = new EditUI(stageUI);
+        editUI = new EditUI(stageUI, dbData);
         editUI.getBtnExit().setOnAction(e -> {
             stageUI.close();
-            editUI.dbData.closeDbConn();
         });
         StackPane spUI = new StackPane(editUI);
         spUI.setPrefWidth(400);

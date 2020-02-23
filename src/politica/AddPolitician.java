@@ -62,18 +62,14 @@ public class AddPolitician extends VBox{
     private HBox hBoxForLogo;
     private ChoiceBox<Role> cbViePos;
     private Label lblVie;
-    public DatabaseHelper dbData;
+    private DatabaseHelper dbData;
     private int roleId;
     private ImageView imgClose;
     private Image imguser;
     
-    public AddPolitician(Stage stage){
+    public AddPolitician(Stage stage, DatabaseHelper db){
         
-        try {
-            dbData = new DatabaseHelper();
-        } catch (SQLException ex) {
-            Logger.getLogger(AddPolitician.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.dbData = db;
         
         imgLogo = new ImageView(new Image(this.getClass().getResource("/Politica-logos_transparent.png").toString()));
         imgLogo.setFitWidth(300);

@@ -70,7 +70,7 @@ public class EditUI extends GridPane{
     private final Label lblTermYears;
     private Alert alertError;
     private Button btnEditProfile;
-    public DatabaseHelper dbData;
+    private DatabaseHelper dbData;
     private TextField txtTermRole;
     private int id;
     private AddPolitician addUI;
@@ -79,13 +79,10 @@ public class EditUI extends GridPane{
     private Stage stage;
     private ImageView imgClose;
     
-    public EditUI(Stage stage){
+    public EditUI(Stage stage, DatabaseHelper db){
         this.stage = stage;
-        try {
-            dbData = new DatabaseHelper();
-        } catch (SQLException ex) {
-            Logger.getLogger(EditUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        this.dbData = db;
         
         imgLogo = new ImageView(new Image(this.getClass().getResource("/Politica-logos_transparent.png").toString()));
         imgLogo.setFitWidth(300);
