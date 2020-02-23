@@ -113,7 +113,12 @@ public class RegisterGrid extends GridPane{
         btnExit.setGraphic(imgClose);
         btnExit.setOnAction(e -> {
             Platform.exit();
-            dbData.closeDbConn();
+            try {
+                dbData.closeDbConn();
+            } catch (NullPointerException ex) {
+                //db has not been connected yet.
+            }
+            
         });
         
         btnRegister = new Button("Create Account");
@@ -195,6 +200,7 @@ public class RegisterGrid extends GridPane{
                 pb.progressProperty().bind(task.progressProperty());
                 task.setOnSucceeded(h -> {
                     if(isRegistered){
+                        dbData.closeDbConn();
                         alertInRegister = new Alert(AlertType.INFORMATION);
                         alertInRegister.setContentText("Successfully signed you up!");
                         alertInRegister.show();

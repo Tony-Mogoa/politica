@@ -220,6 +220,7 @@ public class Politica extends Application {
                 stage.hide();
             }
             else{
+                loginPasswordPane.getHbProgress().getChildren().remove(pb);
                 loginPasswordPane.getBtnLogin().setText("Login");
                 loginPasswordPane.getBtnLogin().setDisable(false);
                 //loginPasswordPane.getBtnLogin().setGraphic(null);
