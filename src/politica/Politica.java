@@ -250,7 +250,7 @@ public class Politica extends Application {
         stage.setY(142.0);
     }
     public void switchToRegister(){
-        RegisterGrid registerGrid = new RegisterGrid(dbData);
+        RegisterGrid registerGrid = new RegisterGrid();
         registerGrid.btnBackToLogin.setOnAction(e -> switchToUsernameScene());
         registerScene = new Scene(registerGrid, 800, 600);
         registerScene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());

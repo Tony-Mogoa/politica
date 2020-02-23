@@ -22,19 +22,19 @@ public class User {
     private String userLastName;
     private DatabaseHelper dbData;
     private Vector<String> basicUserProfile;
-    private boolean loggedIn;
+    private final boolean loggedIn;
     
-    public User(DatabaseHelper dbData){
-        this.dbData = dbData;
+    public User(DatabaseHelper db){
+        this.dbData = db;
         userId = 0;
         userFirstName = "";
         userLastName = "";
         loggedIn = false;
     }
     
-    public User (String email, String password, DatabaseHelper dbData){
+    public User (String email, String password, DatabaseHelper db){
         try {
-            this.dbData = dbData;
+            this.dbData = db;
             basicUserProfile = dbData.retrieveUser(email, Hashing.toHexString(Hashing.getSHA(password)));
         } catch (NoSuchAlgorithmException | SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);

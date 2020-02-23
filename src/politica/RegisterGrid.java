@@ -5,7 +5,11 @@
  */
 package politica;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -13,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -48,10 +53,11 @@ public class RegisterGrid extends GridPane{
     private Alert alertInRegister;
     private ImageView imgClose;
     private DatabaseHelper dbData;
+    private ProgressBar pb;
+    private boolean isRegistered;
     
-    public RegisterGrid(DatabaseHelper db) {
-        this.dbData = dbData;
-        user = new User(db);
+    public RegisterGrid() {
+        
         
         lblRegister = new Label("Signing you up!");
         lblRegister.getStyleClass().add("XFontSize");
@@ -107,6 +113,7 @@ public class RegisterGrid extends GridPane{
         btnExit.setGraphic(imgClose);
         btnExit.setOnAction(e -> {
             Platform.exit();
+            dbData.closeDbConn();
         });
         
         btnRegister = new Button("Create Account");
@@ -169,12 +176,31 @@ public class RegisterGrid extends GridPane{
     public void registerUser(){
         if(txtFirstName.getText().length() > 2 && txtLastName.getText().length() > 2 && txtEmail.getText().length() > 2 && txtPassword.getText().length() > 7){
             if(txtPassword.getText().equals(txtConfirmPassword.getText())){
-                if(user.registerUser(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(), txtPassword.getText())){
-                    alertInRegister = new Alert(AlertType.INFORMATION);
-                    alertInRegister.setContentText("Successfully signed you up!");
-                    alertInRegister.show();
-                    btnBackToLogin.fire();
-                }
+                btnRegister.setText(null);
+                pb = new ProgressBar();
+                btnRegister.setGraphic(pb);
+                Task task = new Task<Void>() {
+                    @Override public Void call() {
+                        try {
+                            dbData = new DatabaseHelper();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Politica.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        user = new User(dbData);
+                        isRegistered = user.registerUser(txtFirstName.getText(), txtLastName.getText(), txtEmail.getText(), txtPassword.getText());
+                        return null;
+                    }
+                };
+                new Thread(task).start();
+                pb.progressProperty().bind(task.progressProperty());
+                task.setOnSucceeded(h -> {
+                    if(isRegistered){
+                        alertInRegister = new Alert(AlertType.INFORMATION);
+                        alertInRegister.setContentText("Successfully signed you up!");
+                        alertInRegister.show();
+                        btnBackToLogin.fire();
+                    }
+                });
             }
             else{
                 alertInRegister = new Alert(AlertType.ERROR);

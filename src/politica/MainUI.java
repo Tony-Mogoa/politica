@@ -95,7 +95,7 @@ public class MainUI extends BorderPane{
         btnAdd.setGraphic(imgAdd);
         btnAdd.setOnAction(e -> openAddDialog());
                 
-        vboxSideMenu = new VBox(20, btnLogout , btnAdd, btnEdit);
+        vboxSideMenu = new VBox(20, btnLogout /*, btnAdd, btnEdit*/);
         vboxSideMenu.getStyleClass().add("outline");
         
         imgLogo = new Image(this.getClass().getResource("/Politica-large-logos_transparent.png").toString());
