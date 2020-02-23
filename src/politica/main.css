@@ -1,0 +1,52 @@
+.fontSize13{
+    -fx-font-size: 13;
+}
+.txtBox{
+    -fx-padding: 8;
+}
+.XFontSize{
+    -fx-font-size: 15
+}
+.fontSize17{
+    -fx-font-size: 17;
+    -fx-font-family: "Segoe UI Light";
+}
+.button-large{
+    -fx-padding: 8;
+}
+.tipCard{
+    -fx-border-radius: 8;
+}
+.boldFont{
+    -fx-font-weight: bold;
+}
+.outline{
+    -fx-border-width: 0.5;
+    -fx-border-color: grey;
+    -fx-border-radius: 8;
+}
+.white{
+    -fx-background-color: white;
+}
+.rounded-corners{
+    -fx-border-radius: 10;
+}
+.paneAddColor{
+    -fx-background-color: #ECF0F1;
+}
+.scrollPaneColor{
+    -fx-background: #ECF0F1;
+}
+.imageWindow{
+    -fx-border-color: grey;
+    -fx-border-width: 0.5;
+    -fx-border-radius: 3;
+}
+.searchBox{
+    -fx-border-radius: 0;
+    -fx-padding: 8;
+}
+
+.text-input:focused {
+    -fx-prompt-text-fill: grey;
+}
