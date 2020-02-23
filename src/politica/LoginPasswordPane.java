@@ -44,7 +44,7 @@ public class LoginPasswordPane extends StackPane{
     private HBox hbProgress;
     private ImageView imgClose;
     
-    public LoginPasswordPane(String email){
+    public LoginPasswordPane(String email, DatabaseHelper db){
         
         lblUsername = new Label("username: " + email);
         lblUsername.getStyleClass().add("boldFont");
@@ -57,6 +57,12 @@ public class LoginPasswordPane extends StackPane{
         btnExit = new Button();
         btnExit.setGraphic(imgClose);
         btnExit.setOnAction(e -> {
+            try {
+                db.closeDbConn();
+            } catch (NullPointerException ex) {
+                //No db connection created
+            }
+            
             Platform.exit();
         });
     

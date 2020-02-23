@@ -69,11 +69,7 @@ public class Politica extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        try {
-            dbData = new DatabaseHelper();
-        } catch (SQLException ex) {
-            Logger.getLogger(Politica.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         stage = primaryStage;
         createDirectory();
         img = new Image(this.getClass().getResource("/Politica-logos_transparent.png").toString());
@@ -167,7 +163,7 @@ public class Politica extends Application {
     }
     
     public void switchToPassword(){
-        loginPasswordPane = new LoginPasswordPane(txtUsername.getText());
+        loginPasswordPane = new LoginPasswordPane(txtUsername.getText(), dbData);
         loginPasswordPane.getBtnBack().setOnAction(e -> switchToUsernameScene());
         loginPasswordPane.getBtnLogin().setOnAction(e -> logIn());
         loginPasswordPane.getTxtPassword().setOnKeyPressed((KeyEvent keyEvent) -> {
@@ -192,6 +188,11 @@ public class Politica extends Application {
 //        loginPasswordPane.getBtnLogin().setGraphic(loader);
         Task task = new Task<Void>() {
             @Override public Void call() {
+                try {
+                    dbData = new DatabaseHelper();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Politica.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 user = new User(txtUsername.getText(), loginPasswordPane.getTxtPassword().getText(), dbData);
                 return null;
             }
@@ -211,6 +212,7 @@ public class Politica extends Application {
                 stageMainUi.setTitle("Politica");
                 stageMainUi.setMaximized(true);
                 stageMainUi.getIcons().add(new Image(this.getClass().getResource("/Material Icons_e862(0)_32.png").toString()));
+                stageMainUi.setOnCloseRequest( event -> {dbData.closeDbConn();} );
                 stageMainUi.show();
                 txtUsername.clear();
                 loginPasswordPane.getTxtPassword().clear();

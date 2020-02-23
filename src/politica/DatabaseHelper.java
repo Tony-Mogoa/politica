@@ -34,10 +34,10 @@ public class DatabaseHelper {
     private Vector<String> userBasicProfile;
     
     public DatabaseHelper() throws SQLException{
-        connectionUrl = "jdbc:mysql://localhost:3306/politica?zeroDateTimeBehavior=convertToNull";
-        connection = DriverManager.getConnection(connectionUrl,"tony","mogoa");
-//        connectionUrl = "jdbc:mysql://remotemysql.com:3306/KA3oDT2n70?zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&verifyServerCertificate=false&useSSL=true";
-//        connection = DriverManager.getConnection(connectionUrl,"KA3oDT2n70","DWTJokFJCq");
+//        connectionUrl = "jdbc:mysql://localhost:3306/politica?zeroDateTimeBehavior=convertToNull";
+//        connection = DriverManager.getConnection(connectionUrl,"tony","mogoa");
+        connectionUrl = "jdbc:mysql://remotemysql.com:3306/KA3oDT2n70?zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&verifyServerCertificate=false&useSSL=true";
+        connection = DriverManager.getConnection(connectionUrl,"KA3oDT2n70","DWTJokFJCq");
     }
     
     public void registerUser(String firstName, String lastName, String email, String password) throws SQLException{

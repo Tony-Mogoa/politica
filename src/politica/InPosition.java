@@ -122,6 +122,10 @@ public class InPosition extends BorderPane{
             @Override public Void call() {
                 try {
                     ResultSet rs = dbData.getPoliticians(role_id);
+                    int counter = 1;
+                    rs.last();
+                    int size= rs.getRow();
+                    rs.beforeFirst();
                     while(rs.next()){
                         Accordion acc = new Accordion();
                         Label lblLeaderNames = new Label();
@@ -183,6 +187,8 @@ public class InPosition extends BorderPane{
                         vbCard.setPadding(new Insets(10));
                         vbCard.setAlignment(Pos.CENTER);
                         politicians.getChildren().add(vbCard);
+                        updateProgress(counter, size);
+                        counter++;
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(InPosition.class.getName()).log(Level.SEVERE, null, ex);
@@ -211,6 +217,10 @@ public class InPosition extends BorderPane{
             @Override public Void call() {
                 try {
                     ResultSet rs = dbData.getPoliticianSearches(leaderName);
+                    int counter = 1;
+                    rs.last();
+                    int size= rs.getRow();
+                    rs.beforeFirst();
                     while(rs.next()){
                         Accordion acc = new Accordion();
                         Label lblLeaderNames = new Label();
@@ -272,6 +282,8 @@ public class InPosition extends BorderPane{
                         vbCard.setPadding(new Insets(10));
                         vbCard.setAlignment(Pos.CENTER);
                         politicians.getChildren().add(vbCard);
+                        updateProgress(counter, size);
+                        counter++;
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(InPosition.class.getName()).log(Level.SEVERE, null, ex);
