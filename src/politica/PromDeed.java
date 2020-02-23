@@ -39,12 +39,8 @@ public class PromDeed extends HBox{
     private ImageView imgEdit;
     private DatabaseHelper dbData;
     
-    public PromDeed(String promise, String deed, int deed_id, boolean fulfills){
-        try {
-            dbData = new DatabaseHelper();
-        } catch (SQLException ex) {
-            Logger.getLogger(PromDeed.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public PromDeed(String promise, String deed, int deed_id, boolean fulfills, DatabaseHelper db){
+        this.dbData = db;
         if(fulfills){
             imgTickOrX = new ImageView(new Image(this.getClass().getResource("/Material Icons_e5ca(0)_16.png").toString()));
         }

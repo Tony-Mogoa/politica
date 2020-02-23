@@ -445,7 +445,7 @@ public class EditUI extends GridPane{
             btnDeleteTerm.setId(termPromDeed.getKey().get(0));
             while(termPromDeed.getValue().next()){
                 boolean fulfill = Integer.parseInt(termPromDeed.getValue().getString("deed_fulfills_promise")) == 1;
-                PromDeed pd = new PromDeed(termPromDeed.getValue().getString("promise_verbose"), termPromDeed.getValue().getString("deed_verbose"), termPromDeed.getValue().getInt("deed_id"), fulfill);
+                PromDeed pd = new PromDeed(termPromDeed.getValue().getString("promise_verbose"), termPromDeed.getValue().getString("deed_verbose"), termPromDeed.getValue().getInt("deed_id"), fulfill, dbData);
                 vbPromsDeeds.getChildren().add(pd);
             }
             Button btnSaveTermData = new Button("Save");
