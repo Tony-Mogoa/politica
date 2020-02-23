@@ -47,10 +47,11 @@ public class RegisterGrid extends GridPane{
     private User user;
     private Alert alertInRegister;
     private ImageView imgClose;
+    private DatabaseHelper dbData;
     
-    public RegisterGrid() {
-        
-        user = new User();
+    public RegisterGrid(DatabaseHelper db) {
+        this.dbData = dbData;
+        user = new User(db);
         
         lblRegister = new Label("Signing you up!");
         lblRegister.getStyleClass().add("XFontSize");

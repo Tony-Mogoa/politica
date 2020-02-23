@@ -24,21 +24,17 @@ public class User {
     private Vector<String> basicUserProfile;
     private boolean loggedIn;
     
-    public User(){
-        try {
-            dbData = new DatabaseHelper();
-        } catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public User(DatabaseHelper dbData){
+        this.dbData = dbData;
         userId = 0;
         userFirstName = "";
         userLastName = "";
         loggedIn = false;
     }
     
-    public User (String email, String password){
+    public User (String email, String password, DatabaseHelper dbData){
         try {
-            dbData = new DatabaseHelper();
+            this.dbData = dbData;
             basicUserProfile = dbData.retrieveUser(email, Hashing.toHexString(Hashing.getSHA(password)));
         } catch (NoSuchAlgorithmException | SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,7 +48,6 @@ public class User {
         else{
             loggedIn = false;
         }
-        dbData.closeDbConn();
     }
     
     public boolean registerUser(String firstName, String lastName, String email, String password){
@@ -62,12 +57,12 @@ public class User {
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             }
-            dbData.closeDbConn();
+            
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RegisterGrid.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-            dbData.closeDbConn();
+            
             return false;
         }
         

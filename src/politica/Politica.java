@@ -6,6 +6,9 @@
 package politica;
 
 import java.io.File;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -62,9 +65,15 @@ public class Politica extends Application {
     private MainUI mainUIPane;
     private Stage stageMainUi;
     private ImageView imgClose;
+    private DatabaseHelper dbData;
     
     @Override
     public void start(Stage primaryStage) {
+        try {
+            dbData = new DatabaseHelper();
+        } catch (SQLException ex) {
+            Logger.getLogger(Politica.class.getName()).log(Level.SEVERE, null, ex);
+        }
         stage = primaryStage;
         createDirectory();
         img = new Image(this.getClass().getResource("/Politica-logos_transparent.png").toString());
@@ -183,7 +192,7 @@ public class Politica extends Application {
 //        loginPasswordPane.getBtnLogin().setGraphic(loader);
         Task task = new Task<Void>() {
             @Override public Void call() {
-                user = new User(txtUsername.getText(), loginPasswordPane.getTxtPassword().getText());
+                user = new User(txtUsername.getText(), loginPasswordPane.getTxtPassword().getText(), dbData);
                 return null;
             }
         };
@@ -239,7 +248,7 @@ public class Politica extends Application {
         stage.setY(142.0);
     }
     public void switchToRegister(){
-        RegisterGrid registerGrid = new RegisterGrid();
+        RegisterGrid registerGrid = new RegisterGrid(dbData);
         registerGrid.btnBackToLogin.setOnAction(e -> switchToUsernameScene());
         registerScene = new Scene(registerGrid, 800, 600);
         registerScene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
